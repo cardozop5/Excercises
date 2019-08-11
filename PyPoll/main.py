@@ -2,129 +2,85 @@
 import os
 import csv
 
-from collections import OrderedDict
-
-from operator import itemgetter
 
 election_csv = os.path.join("Resources","election_data.csv")
-election_output = "Resources","election_data_txt.txt"
+election_output = ("Resources","election_data_txt.txt")
 
-Votes = 0
+Total_Votes = 0
 
-winner_votes = 0
+Khan_Votes = 0
 
-total_candidates = 0
+Correy_Votes = 0
 
-greatest_votes = ["",0]
+Li_Votes = 0
 
-candidate_options = []
+OTooley_Votes = 0
 
-candidate_votes = {}
 
 
 
 # Open and read csv
-with open(election_csv) as election_data:
-    reader = csv.DictReader(election_data)
+with open(election_csv, newline='') as election_data:
+    csvreader = csv.reader(election_data, delimiter =',')
 
-    for row in reader:
-            
-        votes = Votes + 1
+    for row in csvreader:
+        Total_Votes +=1
 
-        total_candidates = row["Candidate"]   
+        if row[2] == "Khan":
+            Khan_Votes +=1
 
-        if row["Candidate"] not in candidate_options:
-    
-     
-            candidate_options.append(row["Candidate"])
+        elif row[2] == "Correy":
+             Correy_Votes +=1
 
+        elif row[2] == "Li":
+            Li_Votes +=1
 
-            candidate_votes[row["Candidate"]] = 1
+        elif row[2] =="OTooley":
+            OTooley_Votes +=1
 
-            
+#create a list
+candidates = ["Khan", "Correy", "Li","OTooley"]
 
-    else:
+votes = [Khan_Votes, Correy_Votes, Li_Votes, OTooley_Votes]
 
-         candidate_votes[row["Candidate"]] = candidate_votes[row["Candidate"]] + 1
+#the purpose of zip is to map the similar index of multiple containers
+# so they can be used just using as single entity
+#max function to return the winner
 
+dict_candidates_and_votes = dict(zip(candidates,votes))
+key = max (dict_candidates_and_votes, key=dict_candidates_and_votes.get)
 
+#Create percentages
 
-#----------------------------------------------------------------------------------------
-
-    # Determine the Winner:
-
-    #if (votes > winner_votes[2]):
-
-     #   greatest_increase[1] = revenue_change
-
-      #  greatest_increase[0] = row["Candidate"]
-
-#----------------------------------------------------------------------------------------
-
-    
-
-print()
-
-print()
-
-print()
-
-print("Election Results")
-
-print("-------------------------")
-
-print("Total Votes " + str(votes))
-
-print("-------------------------")
-
-#results
-
-for candidate in candidate_votes:
-
-    print(candidate + " " + str(round(((candidate_votes[candidate]/votes)*100))) + "%" + " (" + str(candidate_votes[candidate]) + ")") 
-
-    candidate_results = (candidate + " " + str(round(((candidate_votes[candidate]/votes)*100))) + "%" + " (" + str(candidate_votes[candidate]) + ")") 
-
-    
-
-    candidate_votes
+khan_percent = (Khan_Votes/Total_Votes)
+correy_percent = (Correy_Votes/Total_Votes)
+li_percent = (Li_Votes/Total_Votes)
+otooley_percent = (OTooley_Votes/Total_Votes)
 
 
+print(f"Election Results")
+print (f"----------------------")
+print(f"Total Votes: {Total_Votes}")
+print (f"----------------------")
+print(f"Khan: {khan_percent:.3%} ({Khan_Votes})")
+print(f"Correy: {correy_percent:.3%} ({Correy_Votes})")
+print(f"Li: {li_percent:.3%} ({Li_Votes})")
+print(f"OTooley: {otooley_percent:.3%} ({OTooley_Votes})")
+print (f"----------------------")
+print(f"Winner: {key}")
+print (f"----------------------")
 
 
-
-#results
-
-print("-------------------------")
-
-print("-------------------------")
-
-# Output Files
-
-with open(election_output, "w") as txt_file:
-
-    
-
-    txt_file.write("Election Results")
-
-    txt_file.write("\n")
-
-    txt_file.write("-------------------------")
-
-    txt_file.write("\n")
-
-    #txt_file.write(candidate + " " + str(round(((candidate_votes[candidate]/votes)*100))) + "%" + " (" + str(candidate_votes[candidate]) + ")")
-
-    txt_file.write(str(winner))
-
-    txt_file.write("\n")
-
-    txt_file.write("-------------------------")
-
-    txt_file.write("\n")
-
-    txt_file.write("Winner: " + str(winner[0]))
-
-    txt_file.write("\n")
-
-    txt_file.write("Total Votes " + str(votes))
+f = open('election_data_txt.txt','w')
+print(f"Election Results", file=f)
+print (f"----------------------")
+print(f"Total Votes: {Total_Votes}", file=f)
+print (f"----------------------")
+print(f"Khan: {khan_percent:.3%} ({Khan_Votes})", file=f)
+print(f"Correy: {correy_percent:.3%} ({Correy_Votes})", file=f)
+print(f"Li: {li_percent:.3%} ({Li_Votes})", file=f)
+print(f"OTooley: {otooley_percent:.3%} ({OTooley_Votes})", file=f)
+print (f"----------------------")
+print(f"Winner: {key}", file=f)
+print (f"----------------------")
+f.close()
