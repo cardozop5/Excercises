@@ -58,13 +58,13 @@ with open(data_file, newline ='') as csvfile:
               
     
     f = open('budget_data_txt.txt','w')
-    print ("Financial Analysis")
+    print (f"Financial Analysis", file=f)
     print(f"---------------")
-    print(f"Total Months: {len(total_months)}")
-    print(f"Total: ${sum(total)}")
-    print(f"Average Change: {round(sum(average_change)/len(average_change),2)}")
-    print(f"Greatest Increase in Profits: {total_months[max_increase_month]} (${(str(max_increase_value))})")
-    print(f"Greatest Decrease in Profits: {total_months[max_decrease_month]} (${(str(max_decrease_value))})")
+    print(f"Total Months: {len(total_months)}", file=f)
+    print(f"Total: ${sum(total)}", file=f)
+    print(f"Average Change: {round(sum(average_change)/len(average_change),2)}", file=f)
+    print(f"Greatest Increase in Profits: {total_months[max_increase_month]} (${(str(max_increase_value))})", file=f)
+    print(f"Greatest Decrease in Profits: {total_months[max_decrease_month]} (${(str(max_decrease_value))})", file=f)
     f.close()
 
     
